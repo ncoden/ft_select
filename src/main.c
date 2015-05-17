@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 13:39:59 by ncoden            #+#    #+#             */
-/*   Updated: 2015/05/13 21:57:14 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/05/17 22:09:17 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int				main(int argc, char **argv)
 	trm->opts.c_cc[VTIME] = 0;
 	ft_trmkeyhook(trm, "c", (void (*)(void *))&ft_putstr, "Hello");
 	ft_trmkeycmd(trm, "e", "cl");
-	ft_evnttrigger(trm->on_key_press, "e");
-	ft_evnttrigger(trm->on_key_press, "c");
-
+	ft_trmloop(trm);
 	return(0);
 }
