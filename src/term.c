@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   term.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/03 13:39:59 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/09 20:08:39 by ncoden           ###   ########.fr       */
+/*   Created: 2015/06/08 14:51:56 by ncoden            #+#    #+#             */
+/*   Updated: 2015/06/09 19:28:10 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-	#include <stdio.h>
 
-int				main(int argc, char **argv)
+t_trm			*term_init(void)
 {
 	t_trm		*trm;
-	t_lst_col	*args;
 
-	g_stdout_dev = open("/dev/ttys000", O_WRONLY);
-	if (!(trm = term_init()))
-		return (0);
-	if (!(args = args_init(argc, argv)))
-		return (0);
-	args_print(args);
-	ft_trmsignalhook(trm, SIGWINCH, (void (*)(void *))&args_resize, args);
-	ft_trmstart(trm);
-	return(0);
+	if (!(trm = ft_trmnew()))
+		return (FALSE);
+	trm->opts.c_lflag &= ~(ICANON);
+	trm->opts.c_lflag &= ~(ECHO);
+	trm->opts.c_cc[VMIN] = 1;
+	trm->opts.c_cc[VTIME] = 0;
+	return (trm);
 }
