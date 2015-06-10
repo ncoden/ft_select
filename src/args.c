@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/08 14:58:07 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/09 20:26:56 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/10 16:38:14 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_lst_col		*args_calc_cols(t_lst_item *items, t_lst_col *cols)
 		col->width = width_max + 1;
 		if (!items && col->next)
 		{
-			ft_lstdel((t_lst **)&col->next, (void (*)(void *, size_t))&free);
+			ft_lstdel((t_lst **)&col->next, NULL);
 			col->next = NULL;
 		}
 		col = col->next;
@@ -70,50 +70,60 @@ t_lst_col		*args_calc_cols(t_lst_item *items, t_lst_col *cols)
 	return (cols);
 }
 
-void			args_print(t_lst_col *args)
+void			args_print(t_select_list *list)
 {
 	int			i;
-	int			width_term;
+	int			width;
+	t_lst_col	*col;
 
 	ft_trmclr();
-	width_term = ft_trmwidth();
-	i = 0;
-	while (args_print_line(args, i, width_term))
-		i++;
+	width = ft_trmwidth();
+	col = list->cols;
+	while (col)
+	{
+		width -= col->width;
+		col = col->next;
+	}
+	if (width > 0)
+	{
+		i = 0;
+		while (args_print_line(list, i))
+			i++;
+	}
+	else
+		ft_putstr("Window is too small to display the select list");
 }
 
-t_bool			args_print_line(t_lst_col *args, int index, int width_term)
+t_bool			args_print_line(t_select_list *list, int index)
 {
-	t_lst_item	*item;
+	int			count;
 	int			found;
-	int			width_line;
+	t_lst_item	*item;
+	t_lst_col	*col;
 
 	found = FALSE;
-	width_line = 0;
-	while (args)
+	count = 0;
+	col = list->cols;
+	while (col)
 	{
-		if (index < args->height
-			&& (item = (t_lst_item *)ft_lstget((t_lst *)args->items, index)))
+		if (index < col->height
+			&& (item = (t_lst_item *)ft_lstget((t_lst *)col->items, index)))
 		{
-			ft_putchr_fd('A', g_stdout_dev);
-			dprintf(g_stdout_dev, "%p\n", item->name);
-			ft_putchr_fd('B', g_stdout_dev);
 			found = TRUE;
-			ft_putstrleft(item->name, args->width);
+			if (count + index == list->cursor)
+				ft_putchr('O');
+			ft_putstrleft(item->name, col->width);
 		}
-		width_line += args->width;
-		args = args->next;
+		count += col->height;
+		col = col->next;
 	}
 	if (found)
-	{
-		ft_putnchr('\0', width_term - width_line);
 		ft_putchr('\n');
-	}
 	return (found);
 }
 
-void			args_resize(t_lst_col *args)
+void			args_resize(t_select_list *list)
 {
-	args = args_calc_cols(args->items, args);
-	args_print(args);
+	list->cols = args_calc_cols(list->cols->items, list->cols);
+	args_print(list);
 }

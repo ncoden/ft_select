@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 13:39:59 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/09 20:08:39 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/10 17:04:35 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,20 @@
 
 int				main(int argc, char **argv)
 {
-	t_trm		*trm;
-	t_lst_col	*args;
+	t_trm			*trm;
+	t_select_list	list;
 
-	g_stdout_dev = open("/dev/ttys000", O_WRONLY);
+	g_stdout_dev = open("/dev/ttys001", O_WRONLY);
 	if (!(trm = term_init()))
 		return (0);
-	if (!(args = args_init(argc, argv)))
+	if (!(list.cols = args_init(argc, argv)))
 		return (0);
-	args_print(args);
-	ft_trmsignalhook(trm, SIGWINCH, (void (*)(void *))&args_resize, args);
+	args_print(&list);
+	ft_trmsignalhook(trm, SIGWINCH, (void (*)(void *))&args_resize, &list);
+	ft_trmkeyhook(trm, "w", (void (*)(void *))&cursor_go_prev, &list);
+	ft_trmkeyhook(trm, "s", (void (*)(void *))&cursor_go_next, &list);
+	ft_trmkeyhook(trm, "a", (void (*)(void *))&cursor_go_left, &list);
+	ft_trmkeyhook(trm, "d", (void (*)(void *))&cursor_go_right, &list);
 	ft_trmstart(trm);
 	return(0);
 }
