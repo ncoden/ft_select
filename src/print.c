@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/08 14:58:07 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 16:38:56 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 17:04:41 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,17 @@ t_bool			list_print_line(t_select_list *list, int index)
 			&& (item = (t_lst_item *)ft_lstget((t_lst *)col->items, index)))
 		{
 			found = TRUE;
-			if (count + index == list->cursor)
-				ft_putchr('O');
-			ft_putstrleft(item->name, col->width);
+			if (item->selected && count + index == list->cursor)
+				ft_putstr("\033[4;7m");
+			else if (item->selected)
+				ft_putstr("\033[7m");
+			else if (count + index == list->cursor)
+				ft_putstr("\033[4m");
+			ft_putstr(item->name);
+			if (count + index == list->cursor || item->selected)
+				ft_putstr("\033[0m");
+			if (col->next)
+				ft_putspace(col->width - ft_strlen(item->name));
 		}
 		count += col->height;
 		col = col->next;

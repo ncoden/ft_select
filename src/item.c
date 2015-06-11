@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/11 16:38:36 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 16:39:12 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 16:50:33 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,16 @@ void			item_delete(t_select_list *list)
 			list->cursor--;
 	}
 	list_update(list);
+}
+
+void			item_select(t_select_list *list)
+{
+	t_lst_item	*item;
+
+	item = (t_lst_item *)ft_lstget((t_lst *)list->cols->items, list->cursor);
+	if (item->selected)
+		item->selected = FALSE;
+	else
+		item->selected = TRUE;
+	list_print(list);
 }

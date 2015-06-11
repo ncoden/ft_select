@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 17:59:44 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 16:40:04 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 17:08:30 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_trm				*term_init(void);
 t_lst_col			*list_init(int argc, char **argv);
 t_lst_col			*list_calc_cols(t_lst_item *items, t_lst_col *cols);
 
+void				item_select(t_select_list *list);
 void				item_delete(t_select_list *list);
 
 void				cursor_go_next(t_select_list *list);

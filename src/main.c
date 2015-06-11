@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 13:39:59 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 16:40:13 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 17:08:43 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int				main(int argc, char **argv)
 	list_print(&list);
 	ft_trmkeyhook(trm, TRM_KEY_ESC, (void (*)(void *))&ft_trmstop, NULL);
 	ft_trmkeyhook(trm, TRM_KEY_BKSP, (void (*)(void *))&item_delete, &list);
+	ft_trmkeyhook(trm, " ", (void (*)(void *))&item_select, &list);
 	ft_trmkeyhook(trm, TRM_KEY_UP, (void (*)(void *))&cursor_go_prev, &list);
 	ft_trmkeyhook(trm, TRM_KEY_DOWN, (void (*)(void *))&cursor_go_next, &list);
 	ft_trmkeyhook(trm, TRM_KEY_LEFT, (void (*)(void *))&cursor_go_left, &list);
