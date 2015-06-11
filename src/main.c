@@ -6,12 +6,11 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 13:39:59 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 17:35:18 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 19:58:13 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-	#include <stdio.h>
 
 int				main(int argc, char **argv)
 {
@@ -22,6 +21,7 @@ int				main(int argc, char **argv)
 		return (0);
 	if (!(list.cols = list_init(argc, argv)))
 		return (0);
+	ft_trmputcmd("ti");
 	list_print(&list);
 	ft_trmkeyhook(trm, TRM_KEY_ESC, (void (*)(void *))&ft_trmstop, NULL);
 	ft_trmkeyhook(trm, TRM_KEY_BKSP, (void (*)(void *))&item_delete, &list);
@@ -31,8 +31,12 @@ int				main(int argc, char **argv)
 	ft_trmkeyhook(trm, TRM_KEY_UP, (void (*)(void *))&cursor_go_prev, &list);
 	ft_trmkeyhook(trm, TRM_KEY_DOWN, (void (*)(void *))&cursor_go_next, &list);
 	ft_trmkeyhook(trm, TRM_KEY_LEFT, (void (*)(void *))&cursor_go_left, &list);
-	ft_trmkeyhook(trm, TRM_KEY_RIGHT, (void (*)(void *))&cursor_go_right, &list);
+	ft_trmkeyhook(trm, TRM_KEY_RIGHT, (void (*)(void *))&cursor_go_right,
+		&list);
 	ft_trmsignalhook(trm, SIGWINCH, (void (*)(void *))&list_update, &list);
+	ft_trmsignalhook(trm, SIGCONT, (void (*)(void *))&list_update, &list);
+	ft_trmsignalhook(trm, SIGINT, (void (*)(void *))&ft_trmstop, NULL);
 	ft_trmstart(trm);
-	return(0);
+	ft_trmputcmd("te");
+	return (0);
 }
