@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/08 14:58:07 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 17:04:41 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 17:47:34 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,22 @@ t_bool			list_print_line(t_select_list *list, int index)
 		{
 			found = TRUE;
 			if (item->selected && count + index == list->cursor)
-				ft_putstr("\033[4;7m");
+				ft_putstr_trm("\033[4;7m");
 			else if (item->selected)
-				ft_putstr("\033[7m");
+				ft_putstr_trm("\033[7m");
 			else if (count + index == list->cursor)
-				ft_putstr("\033[4m");
-			ft_putstr(item->name);
+				ft_putstr_trm("\033[4m");
+			ft_putstr_trm(item->name);
 			if (count + index == list->cursor || item->selected)
-				ft_putstr("\033[0m");
+				ft_putstr_trm("\033[0m");
 			if (col->next)
-				ft_putspace(col->width - ft_strlen(item->name));
+				ft_putnchr_fd(' ', col->width - ft_strlen(item->name), ft_trmgetout());
 		}
 		count += col->height;
 		col = col->next;
 	}
 	if (found)
-		ft_putchr('\n');
+		ft_putchr_trm('\n');
 	return (found);
 }
 
@@ -76,4 +76,25 @@ void			list_update(t_select_list *list)
 {
 	list->cols = list_calc_cols(list->cols->items, list->cols);
 	list_print(list);
+}
+
+void			list_submit(t_select_list *list)
+{
+	t_bool		sent;
+	t_lst_item	*item;
+
+	sent = FALSE;
+	item = list->cols->items;
+	while (item)
+	{
+		if (item->selected)
+		{
+			if (sent)
+				ft_putchr(' ');
+			ft_putstr(item->name);
+			sent = TRUE;
+		}
+		item = item->next;
+	}
+	ft_trmstop(NULL);
 }
