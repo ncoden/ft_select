@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.c                                             :+:      :+:    :+:   */
+/*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/08 14:58:07 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/10 16:38:14 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 16:13:53 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-t_lst_col		*args_init(int argc, char **argv)
+t_lst_col		*list_init(int argc, char **argv)
 {
 	t_lst_item	*item;
 	t_lst_item	*items;
@@ -30,10 +30,10 @@ t_lst_col		*args_init(int argc, char **argv)
 		item->name = argv[argc];
 		item->selected = 0;
 	}
-	return (args_calc_cols(items, NULL));
+	return (list_calc_cols(items, NULL));
 }
 
-t_lst_col		*args_calc_cols(t_lst_item *items, t_lst_col *cols)
+t_lst_col		*list_calc_cols(t_lst_item *items, t_lst_col *cols)
 {
 	t_lst_col	*col;
 	int			i;
@@ -70,7 +70,7 @@ t_lst_col		*args_calc_cols(t_lst_item *items, t_lst_col *cols)
 	return (cols);
 }
 
-void			args_print(t_select_list *list)
+void			list_print(t_select_list *list)
 {
 	int			i;
 	int			width;
@@ -87,14 +87,14 @@ void			args_print(t_select_list *list)
 	if (width > 0)
 	{
 		i = 0;
-		while (args_print_line(list, i))
+		while (list_print_line(list, i))
 			i++;
 	}
 	else
 		ft_putstr("Window is too small to display the select list");
 }
 
-t_bool			args_print_line(t_select_list *list, int index)
+t_bool			list_print_line(t_select_list *list, int index)
 {
 	int			count;
 	int			found;
@@ -122,8 +122,8 @@ t_bool			args_print_line(t_select_list *list, int index)
 	return (found);
 }
 
-void			args_resize(t_select_list *list)
+void			list_resize(t_select_list *list)
 {
-	list->cols = args_calc_cols(list->cols->items, list->cols);
-	args_print(list);
+	list->cols = list_calc_cols(list->cols->items, list->cols);
+	list_print(list);
 }

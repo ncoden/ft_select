@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 17:59:44 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/10 17:04:45 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 16:13:29 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ typedef struct		s_select_list
 
 t_trm				*term_init(void);
 
-t_lst_col			*args_init(int argc, char **argv);
-t_lst_col			*args_calc_cols(t_lst_item *items, t_lst_col *cols);
-void				args_print(t_select_list *list);
-t_bool				args_print_line(t_select_list *list, int index);
-void				args_resize(t_select_list *list);
+t_lst_col			*list_init(int argc, char **argv);
+t_lst_col			*list_calc_cols(t_lst_item *items, t_lst_col *cols);
+void				list_print(t_select_list *list);
+t_bool				list_print_line(t_select_list *list, int index);
+
+void				list_delete(t_select_list *list);
+void				list_resize(t_select_list *list);
 
 void				cursor_go_next(t_select_list *list);
 void				cursor_go_prev(t_select_list *list);
