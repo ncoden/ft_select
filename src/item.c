@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/11 16:38:36 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 17:45:39 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 18:07:54 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void			item_delete(t_select_list *list)
 {
 	int			i;
 	t_lst_item	*prev;
-	t_lst_item	*next;
 
 	i = list->cursor;
 	if (i == 0)
@@ -29,10 +28,8 @@ void			item_delete(t_select_list *list)
 			prev = prev->next;
 			i--;
 		}
-		next = prev->next->next;
-		free(prev->next);
-		prev->next = next;
-		if (!next)
+		ft_lstdelone((t_lst **)&prev->next, NULL);
+		if (!prev->next)
 			list->cursor--;
 	}
 	if (list->cols->items)

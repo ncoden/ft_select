@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/08 14:58:07 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 17:47:34 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 18:38:44 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,10 @@ t_bool			list_print_line(t_select_list *list, int index)
 			&& (item = (t_lst_item *)ft_lstget((t_lst *)col->items, index)))
 		{
 			found = TRUE;
-			if (item->selected && count + index == list->cursor)
-				ft_putstr_trm("\033[4;7m");
-			else if (item->selected)
-				ft_putstr_trm("\033[7m");
-			else if (count + index == list->cursor)
-				ft_putstr_trm("\033[4m");
-			ft_putstr_trm(item->name);
-			if (count + index == list->cursor || item->selected)
-				ft_putstr_trm("\033[0m");
+			list_print_item(item, (count + index == list->cursor));
 			if (col->next)
-				ft_putnchr_fd(' ', col->width - ft_strlen(item->name), ft_trmgetout());
+				ft_putnchr_fd(' ', col->width - ft_strlen(item->name),
+					ft_trmgetout());
 		}
 		count += col->height;
 		col = col->next;
@@ -70,6 +63,19 @@ t_bool			list_print_line(t_select_list *list, int index)
 	if (found)
 		ft_putchr_trm('\n');
 	return (found);
+}
+
+void			list_print_item(t_lst_item *item, t_bool hover)
+{
+	if (item->selected && hover)
+		ft_putstr_trm("\033[4;7m");
+	else if (item->selected)
+		ft_putstr_trm("\033[7m");
+	else if (hover)
+		ft_putstr_trm("\033[4m");
+	ft_putstr_trm(item->name);
+	if (item->selected || hover)
+		ft_putstr_trm("\033[0m");
 }
 
 void			list_update(t_select_list *list)

@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 17:59:44 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 17:11:46 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 19:57:41 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define FT_SELECT_H
 
 # include "libft.h"
-
-int					g_stdout_dev;
 
 typedef struct		s_lst_item
 {
@@ -44,6 +42,7 @@ t_lst_col			*list_calc_cols(t_lst_item *items, t_lst_col *cols);
 
 void				list_print(t_select_list *list);
 t_bool				list_print_line(t_select_list *list, int index);
+void				list_print_item(t_lst_item *item, t_bool hover);
 void				list_update(t_select_list *list);
 void				list_submit(t_select_list *list);
 
