@@ -6,7 +6,7 @@
 #    By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/04/29 06:56:00 by ncoden            #+#    #+#              #
-#    Updated: 2015/06/11 16:13:47 by ncoden           ###   ########.fr        #
+#    Updated: 2015/06/11 16:20:47 by ncoden           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ LIB = \
 	libft/libft.a
 SRC = \
 	main.c\
-	term.c\
+	init.c\
 	list.c\
 	cursor.c
 

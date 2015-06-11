@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/10 15:49:30 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 14:13:33 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 16:21:04 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			cursor_go_next(t_select_list *list)
 		list->cursor++;
 	else
 		list->cursor = 0;
-	args_print(list);
+	list_print(list);
 }
 
 void			cursor_go_prev(t_select_list *list)
@@ -40,7 +40,7 @@ void			cursor_go_prev(t_select_list *list)
 		list->cursor--;
 	else
 		list->cursor = ft_lstlen((t_lst *)list->cols->items) - 1;
-	args_print(list);
+	list_print(list);
 }
 
 void			cursor_go_left(t_select_list *list)
@@ -49,7 +49,7 @@ void			cursor_go_left(t_select_list *list)
 		list->cursor -= list->cols->height;
 	else
 		list->cursor += distance_to_last_column(list->cols, list->cursor);
-	args_print(list);
+	list_print(list);
 }
 
 void			cursor_go_right(t_select_list *list)
@@ -57,5 +57,5 @@ void			cursor_go_right(t_select_list *list)
 	list->cursor += list->cols->height;
 	if (list->cursor >= ft_lstlen((t_lst *)list->cols->items))
 		list->cursor %= list->cols->height;
-	args_print(list);
+	list_print(list);
 }

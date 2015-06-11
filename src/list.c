@@ -6,69 +6,11 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/08 14:58:07 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 16:13:53 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 16:20:15 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-
-t_lst_col		*list_init(int argc, char **argv)
-{
-	t_lst_item	*item;
-	t_lst_item	*items;
-
-	items = NULL;
-	while (argc > 1)
-	{
-		argc--;
-		if (!(item = (t_lst_item *)ft_lstpushfront__(sizeof(t_lst_item),
-			(t_lst **)&items)))
-		{
-			ft_lstdel((t_lst **)&items, (void (*)(void *, size_t))&free);
-			return (NULL);
-		}
-		item->name = argv[argc];
-		item->selected = 0;
-	}
-	return (list_calc_cols(items, NULL));
-}
-
-t_lst_col		*list_calc_cols(t_lst_item *items, t_lst_col *cols)
-{
-	t_lst_col	*col;
-	int			i;
-	int			height;
-	int			width;
-	int			width_max;
-
-	col = cols;
-	height = ft_trmheight() - 1;
-	while (items)
-	{
-		if (!col && (!(col = (t_lst_col *)ft_lstpushback__(sizeof(t_lst_col),
-				(t_lst **)&cols))))
-			return (NULL);
-		i = 0;
-		width_max = 0;
-		col->items = items;
-		while (items && i < height)
-		{
-			if ((width = ft_strlen(items->name)) > width_max)
-				width_max = width;
-			items = items->next;
-			i++;
-		}
-		col->height = i;
-		col->width = width_max + 1;
-		if (!items && col->next)
-		{
-			ft_lstdel((t_lst **)&col->next, NULL);
-			col->next = NULL;
-		}
-		col = col->next;
-	}
-	return (cols);
-}
 
 void			list_print(t_select_list *list)
 {
