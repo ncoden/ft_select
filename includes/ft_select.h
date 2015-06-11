@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 17:59:44 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 16:20:34 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 16:33:13 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void				list_print(t_select_list *list);
 t_bool				list_print_line(t_select_list *list, int index);
 
 void				list_delete(t_select_list *list);
-void				list_resize(t_select_list *list);
+void				list_update(t_select_list *list);
 
 void				cursor_go_next(t_select_list *list);
 void				cursor_go_prev(t_select_list *list);

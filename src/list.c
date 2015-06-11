@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/08 14:58:07 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 16:20:15 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/11 16:34:32 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,34 @@ t_bool			list_print_line(t_select_list *list, int index)
 	return (found);
 }
 
-void			list_resize(t_select_list *list)
+void			list_update(t_select_list *list)
 {
 	list->cols = list_calc_cols(list->cols->items, list->cols);
 	list_print(list);
+}
+
+void			list_delete(t_select_list *list)
+{
+	int			i;
+	t_lst_item	*prev;
+	t_lst_item	*next;
+
+	i = list->cursor;
+	if (i == 0)
+		ft_lstdelone((t_lst **)&list->cols->items, NULL);
+	else
+	{
+		prev = list->cols->items;
+		while (i > 1)
+		{
+			prev = prev->next;
+			i--;
+		}
+		next = prev->next->next;
+		free(prev->next);
+		prev->next = next;
+		if (!next)
+			list->cursor--;
+	}
+	list_update(list);
 }
