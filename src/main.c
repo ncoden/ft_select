@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 13:39:59 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 19:58:13 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/12 20:14:17 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int				main(int argc, char **argv)
 
 	if (!(trm = term_init()))
 		return (0);
-	if (!(list.cols = list_init(argc, argv)))
+	if (!(list_init(&list, argc, argv)))
 		return (0);
-	ft_trmputcmd("ti");
-	list_print(&list);
+	trm->on_start = ft_evntnew((void (*)(void *))&list_print, &list);
+	trm->on_restore = ft_evntnew((void (*)(void *))&list_update, &list);
 	ft_trmkeyhook(trm, TRM_KEY_ESC, (void (*)(void *))&ft_trmstop, NULL);
 	ft_trmkeyhook(trm, TRM_KEY_BKSP, (void (*)(void *))&item_delete, &list);
 	ft_trmkeyhook(trm, TRM_KEY_DEL, (void (*)(void *))&item_delete, &list);
@@ -34,9 +34,7 @@ int				main(int argc, char **argv)
 	ft_trmkeyhook(trm, TRM_KEY_RIGHT, (void (*)(void *))&cursor_go_right,
 		&list);
 	ft_trmsignalhook(trm, SIGWINCH, (void (*)(void *))&list_update, &list);
-	ft_trmsignalhook(trm, SIGCONT, (void (*)(void *))&list_update, &list);
 	ft_trmsignalhook(trm, SIGINT, (void (*)(void *))&ft_trmstop, NULL);
 	ft_trmstart(trm);
-	ft_trmputcmd("te");
 	return (0);
 }

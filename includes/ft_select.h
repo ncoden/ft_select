@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 17:59:44 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 19:57:41 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/12 19:44:57 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ typedef struct		s_lst_col
 typedef struct		s_select_list
 {
 	t_lst_col		*cols;
+	t_lst_item		*items;
 	int				cursor;
 }					t_select_list;
 
 t_trm				*term_init(void);
-t_lst_col			*list_init(int argc, char **argv);
+t_bool				list_init(t_select_list *list, int argc, char **argv);
 t_lst_col			*list_calc_cols(t_lst_item *items, t_lst_col *cols);
 
 void				list_print(t_select_list *list);

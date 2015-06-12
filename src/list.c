@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/08 14:58:07 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 18:38:44 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/12 19:48:19 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void			list_print_item(t_lst_item *item, t_bool hover)
 
 void			list_update(t_select_list *list)
 {
-	list->cols = list_calc_cols(list->cols->items, list->cols);
+	list->cols = list_calc_cols(list->items, list->cols);
 	list_print(list);
 }
 
@@ -90,7 +90,7 @@ void			list_submit(t_select_list *list)
 	t_lst_item	*item;
 
 	sent = FALSE;
-	item = list->cols->items;
+	item = list->items;
 	while (item)
 	{
 		if (item->selected)

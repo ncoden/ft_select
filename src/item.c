@@ -19,10 +19,10 @@ void			item_delete(t_select_list *list)
 
 	i = list->cursor;
 	if (i == 0)
-		ft_lstdelone((t_lst **)&list->cols->items, NULL);
+		ft_lstdelone((t_lst **)&list->items, NULL);
 	else
 	{
-		prev = list->cols->items;
+		prev = list->items;
 		while (i > 1)
 		{
 			prev = prev->next;
@@ -32,7 +32,7 @@ void			item_delete(t_select_list *list)
 		if (!prev->next)
 			list->cursor--;
 	}
-	if (list->cols->items)
+	if (list->items)
 		list_update(list);
 	else
 		list_submit(list);
@@ -42,7 +42,7 @@ void			item_select(t_select_list *list)
 {
 	t_lst_item	*item;
 
-	item = (t_lst_item *)ft_lstget((t_lst *)list->cols->items, list->cursor);
+	item = (t_lst_item *)ft_lstget((t_lst *)list->items, list->cursor);
 	if (item->selected)
 		item->selected = FALSE;
 	else

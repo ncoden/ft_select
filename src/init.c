@@ -6,7 +6,7 @@
 /*   By: ncoden <ncoden@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/08 14:51:56 by ncoden            #+#    #+#             */
-/*   Updated: 2015/06/11 19:57:49 by ncoden           ###   ########.fr       */
+/*   Updated: 2015/06/12 19:45:24 by ncoden           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,25 @@ t_trm				*term_init(void)
 	return (trm);
 }
 
-t_lst_col			*list_init(int argc, char **argv)
+t_bool				list_init(t_select_list *list, int argc, char **argv)
 {
 	t_lst_item	*item;
-	t_lst_item	*items;
 
-	items = NULL;
+	list->items = NULL;
 	while (argc > 1)
 	{
 		argc--;
 		if (!(item = (t_lst_item *)ft_lstpushfront__(sizeof(t_lst_item),
-			(t_lst **)&items)))
+			(t_lst **)&list->items)))
 		{
-			ft_lstdel((t_lst **)&items, (void (*)(void *, size_t))&free);
-			return (NULL);
+			ft_lstdel((t_lst **)&list->items, (void (*)(void *, size_t))&free);
+			return (FALSE);
 		}
 		item->name = argv[argc];
 		item->selected = 0;
 	}
-	return (list_calc_cols(items, NULL));
+	list->cols = list_calc_cols(list->items, NULL);
+	return (TRUE);
 }
 
 static t_lst_item	*calc_col(t_lst_col *col, t_lst_item *items, int height)
@@ -72,8 +72,12 @@ t_lst_col			*list_calc_cols(t_lst_item *items, t_lst_col *cols)
 	t_lst_col	*col;
 	int			height;
 
+	if ((height = ft_trmheight() - 1) <= 0)
+	{
+		ft_lstdel((t_lst **)&cols, NULL);
+		return (NULL);
+	}
 	col = cols;
-	height = ft_trmheight() - 1;
 	while (items)
 	{
 		if (!col && (!(col = (t_lst_col *)ft_lstpushback__(sizeof(t_lst_col),

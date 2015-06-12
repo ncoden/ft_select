@@ -27,7 +27,7 @@ static int		distance_to_last_column(t_lst_col *col, int index)
 
 void			cursor_go_next(t_select_list *list)
 {
-	if (list->cursor < ft_lstlen((t_lst *)list->cols->items) - 1)
+	if (list->cursor < ft_lstlen((t_lst *)list->items) - 1)
 		list->cursor++;
 	else
 		list->cursor = 0;
@@ -39,7 +39,7 @@ void			cursor_go_prev(t_select_list *list)
 	if (list->cursor > 0)
 		list->cursor--;
 	else
-		list->cursor = ft_lstlen((t_lst *)list->cols->items) - 1;
+		list->cursor = ft_lstlen((t_lst *)list->items) - 1;
 	list_print(list);
 }
 
@@ -55,7 +55,7 @@ void			cursor_go_left(t_select_list *list)
 void			cursor_go_right(t_select_list *list)
 {
 	list->cursor += list->cols->height;
-	if (list->cursor >= ft_lstlen((t_lst *)list->cols->items))
+	if (list->cursor >= ft_lstlen((t_lst *)list->items))
 		list->cursor %= list->cols->height;
 	list_print(list);
 }
